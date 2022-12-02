@@ -3,7 +3,7 @@ import path from "path";
 
 import { getRoundScore, getGameScore } from "./script_2";
 
-import { it, expect, expectTypeOf } from "vitest";
+import { it, expect } from "vitest";
 
 it("must end in a draw", () => {
   expect(getRoundScore(["A", "Y"])).toBe(4);
@@ -35,6 +35,5 @@ it("returns the score of the game", () => {
     .split("\n")
     .map((el) => el.split(" "))
     .filter((el) => el.length > 1); // remove invalid values
-  expect(getGameScore(fileContent)).toBe(4);
-  expectTypeOf(getGameScore(fileContent)).toBeNumber();
+  expect(getGameScore(fileContent)).toBe(12725);
 });

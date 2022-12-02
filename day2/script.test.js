@@ -3,7 +3,7 @@ import path from "path";
 
 import { getRoundScore, getGameScore } from "./script";
 
-import { it, expect, expectTypeOf } from "vitest";
+import { it, expect } from "vitest";
 
 it("returns the score of the round", () => {
   expect(getRoundScore(["A", "Y"])).toBe(8);
@@ -22,33 +22,6 @@ it("returns the score of the game", () => {
     getGameScore([
       ["A", "Y"],
       ["B", "X"],
-    ])
-  ).toBe(9);
-});
-
-it("returns the score of the game", () => {
-  expect(
-    getGameScore([
-      ["A", "Y"],
-      ["C", "Z"],
-    ])
-  ).toBe(14);
-});
-
-it("returns the score of the game", () => {
-  expect(
-    getGameScore([
-      ["B", "X"],
-      ["C", "Z"],
-    ])
-  ).toBe(7);
-});
-
-it("returns the score of the game", () => {
-  expect(
-    getGameScore([
-      ["A", "Y"],
-      ["B", "X"],
       ["C", "Z"],
     ])
   ).toBe(15);
@@ -60,6 +33,7 @@ it("returns the score of the game", () => {
   const fileContent = fs
     .readFileSync(filePath, "utf8")
     .split("\n")
-    .map((el) => el.split(" "));
-  expectTypeOf(getGameScore(fileContent)).toBeNumber();
+    .map((el) => el.split(" "))
+    .filter((el) => el.length > 1);
+  expect(getGameScore(fileContent)).toBe(11603);
 });

@@ -1,6 +1,6 @@
 import tap from "tap";
 import { extractProcedures, getLastItems, move, multiMove } from "./script.js";
-
+//
 tap.test("Testing move function", async (tap) => {
   tap.test("move 1 from 2 to 1", async ({ same }) => {
     const given = [
@@ -22,7 +22,7 @@ tap.test("Testing move function", async (tap) => {
     same(returned, expected);
   });
 });
-
+//
 tap.test("Testing multimove function", async ({ same }) => {
   const givenOrders = [
     [1, 2, 1],
@@ -35,27 +35,29 @@ tap.test("Testing multimove function", async ({ same }) => {
   const returned = multiMove(givenOrders, givenArr);
   same(returned, expected);
 });
+//
+//
+// import fs from "fs";
+// import path from "path";
+// tap.test("Extract procedures from file", async (t) => {
+//   const filePath = path.join(process.cwd(), "day5", "input");
+//   const fileContent = fs.readFileSync(filePath, "utf-8").split("\n\n");
+//   const returned = extractProcedures(fileContent[1].split("\n"));
+//   t.pass(returned);
+// });
+
+// tap.test("Testing answer for question 1", async ({ equal }) => {});
 
 tap.test("Testing getLastItem", async ({ equal }) => {
   const givenOrders = [
-    [1, 2, 1],
-    [3, 1, 3],
-    [2, 2, 1],
-    [1, 1, 2],
+    "move 1 from 2 to 1",
+    "move 3 from 1 to 3",
+    "move 2 from 2 to 1",
+    "move 1 from 1 to 2",
   ];
   const givenArr = [["Z", "N"], ["M", "C", "D"], ["P"]];
+  const procedures = extractProcedures(givenOrders);
   const expected = "CMZ";
-  const returned = getLastItems(multiMove(givenOrders, givenArr));
+  const returned = getLastItems(multiMove(procedures, givenArr));
   equal(returned, expected);
 });
-
-import fs from "fs";
-import path from "path";
-tap.test("Extract procedures from file", async (t) => {
-  const filePath = path.join(process.cwd(), "day5", "input");
-  const fileContent = fs.readFileSync(filePath, "utf-8").split("\n\n");
-  const returned = extractProcedures(fileContent[1].split("\n"));
-  t.pass(returned);
-});
-
-// tap.test("Testing answer for question 1", async ({ equal }) => {});

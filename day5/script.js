@@ -4,13 +4,14 @@
  * @param {number} targetIndex
  * @param {Array} arr
  */
-export const move = ([count, origin, targetIndex], arr) => {
-  while (count > 0) {
-    let el = arr[origin - 1].pop();
-    arr[targetIndex - 1].push(el);
-    count--;
+export const move = ([count, origin, target], arr) => {
+  try {
+    const removed = arr[origin - 1].splice(-1 * count).reverse();
+    arr[target - 1].push(...removed);
+    return arr;
+  } catch (e) {
+    console.log(arr);
   }
-  return arr;
 };
 
 /**
@@ -42,17 +43,25 @@ export const extractProcedures = (arr) =>
       .map((el) => parseInt(el))
   );
 
+const input = [
+  ["C", "Z", "N", "B", "M", "W", "Q", "V"],
+  ["H", "Z", "R", "W", "C", "B"],
+  ["F", "Q", "R", "J"],
+  ["Z", "S", "W", "H", "F", "N", "M", "T"],
+  ["G", "F", "W", "L", "N", "Q", "P"],
+  ["L", "P", "W"],
+  ["V", "B", "D", "R", "G", "C", "Q", "J"],
+  ["Z", "Q", "N", "B", "W"],
+  ["H", "L", "F", "C", "G", "T", "J"],
+];
+
 import fs from "fs";
 import path from "path";
-
-/**
- * @param {string} str
- */
-export const extractArray = (str) => {
-  return str;
-};
-
 const filePath = path.join(process.cwd(), "day5", "input");
-const fileContent = fs.readFileSync(filePath, "utf-8").split("\n\n");
-const arr = extractArray(fileContent[0]);
-console.log(arr);
+const fileContent = fs
+  .readFileSync(filePath, "utf-8")
+  .split("\n\n")
+  .slice(0, -1);
+const procedures = extractProcedures(fileContent[1].split("\n"));
+const ans = getLastItems(multiMove(procedures, input));
+console.log(ans);
